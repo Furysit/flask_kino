@@ -1,0 +1,203 @@
+
+
+
+body {
+    background-image: url('/static/img/background.png');
+    text-align: center;
+    backdrop-filter: blur(1px);
+    height: 100%;
+}
+
+h1{
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.main_container{
+    max-width: 1200px;
+    max-height: 1200px;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    border: solid, 2px;
+    background-color: rgba(233, 186, 33, 0.9);
+    overflow: hidden;
+    
+}
+
+.create-post{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.create-post a{
+  text-decoration: none;
+  font-family: "Exo 2", sans-serif;
+  font-weight: 800;
+  font-size: 25px;
+  color: rgba(0, 0, 0, 0.767);
+}
+
+.create-post a:hover{
+  color: rgba(255, 255, 255, 0.9);
+  transition: 0.5s ease-in;
+}
+
+.posts{
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: auto;
+  margin-top: 20px;
+  max-width: 800px;
+  width: 100%;
+  height: 150px;
+  border: solid 1px;
+}
+
+.post-img-div{
+  width: 100px;
+  height: 100px;
+}
+
+.post-user-div, .post-movie-div, .post-text-div {
+  display: flex;
+  flex-direction: column; /* Расположение элементов сверху вниз */
+  justify-content: first baseline; /* Разделяем h2 и p */
+  align-items: center; /* Центруем элементы по горизонтали */
+  width: 100px; /* Общая ширина блока */
+  height: 150px; /* Общая высота блока */
+}
+
+.post-user-div h2, .post-movie-div h2, .post-text-div h2 {
+  margin: 0; /* Убираем отступы сверху и снизу */
+  padding: 0; /* Убираем внутренние отступы */
+}
+
+.post-user-div p, .post-movie-div p, .post-text-div p {
+  font-family: "Exo 2", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 40px;
+  padding: 0; /* Убираем внутренние отступы */
+  align-self: center; /* Центруем по горизонтали */
+}
+
+
+.btn-delete {
+  background-color: #ff4d4d;  /* Красный фон */
+  color: white;               /* Белый текст */
+  border: none;               /* Убираем границу */
+  font-size: 10px;            /* Размер шрифта */
+  border-radius: 2px;         /* Закругленные углы */
+  cursor: pointer;            /* Курсор "рука" при наведении */
+  transition: background-color 0.3s ease;  /* Плавное изменение фона */
+}
+
+.btn-delete:hover {
+  background-color: #e60000;  /* Темнее при наведении */
+}
+
+.btn-delete:active {
+  background-color: #cc0000;  /* Ещё темнее при нажатии */
+  transform: scale(0.98);     /* Небольшое уменьшение */
+}
+
+.post_img{
+  height: 150px;
+  width: 100px;
+  object-fit: cover;
+}
+
+.slider_wrapper {
+  margin: auto;
+  height: 200px;
+  width: 100%;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.myslide {
+  justify-content: center;
+  max-height: 200px;
+  display: none;
+  flex-wrap: nowrap;
+  align-items: center;
+  transition: opacity 1s ease-in-out;
+}
+
+.myslide img {
+  height: 200px;
+  width: 150px;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.slider_wrapper a {
+  cursor: pointer;
+}
+
+.login_box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 200px auto;
+  width: 400px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 1);
+  border: 3px solid black;
+}
+
+.login_box form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_box input{
+  width: 30%;
+  height: 20px;
+  border: solid 1px black;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.login_box button{
+  width: 100px;
+  border: none;
+  background-color: #e4bc3a;
+  border-radius: 20px;
+}
+
+.title_canvas{
+  width: 600px;
+  height: 400px;
+  margin-top: 50px;
+  margin: auto;
+  border: solid, 2px;
+  background-color: rgba(233, 186, 33, 0.9);
+  overflow: hidden;
+}
+.title_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 500px;
+  height: 300px;
+  margin: auto;
+  padding: 50px;
+}
+
+.title-form{
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+}

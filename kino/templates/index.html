@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+{% block title %} Kino.Govno {% endblock %}
+
+{% block body %}
+<div class="main_container">
+
+
+    <div class="slider_wrapper">
+        <div class="myslide">
+          <div class="slider_item pack_1"><img src="/static/img/1.jpg"></div>
+          <div class="slider_item pack_1"><img src="/static/img/2.jpg"></div>
+          <div class="slider_item pack_1"><img src="/static/img/3.png"></div>
+          <div class="slider_item pack_1"><img src="/static/img/4.png"></div>
+          <div class="slider_item pack_1"><img src="/static/img/5.jpg"></div>
+        </div>
+        <div class="myslide">
+          <div class="slider_item pack_2"><img src="/static/img/6.jpg"></div>
+          <div class="slider_item pack_2"><img src="/static/img/7.jpg" ></div>
+          <div class="slider_item pack_2"><img src="/static/img/8.jpg" ></div>
+          <div class="slider_item pack_2"><img src="/static/img/9.jpg" ></div>
+          <div class="slider_item pack_2"><img src="/static/img/10.jpg" ></div>
+        </div>
+        <div class="myslide">
+            <div class="slider_item pack_2"><img src="/static/img/11.jpg"></div>
+            <div class="slider_item pack_2"><img src="/static/img/12.jpg" ></div>
+            <div class="slider_item pack_2"><img src="/static/img/13.jpg" ></div>
+            <div class="slider_item pack_2"><img src="/static/img/14.jpg" ></div>
+            <div class="slider_item pack_2"><img src="/static/img/15.jpg" ></div>
+          </div>
+      </div>
+      <br>
+    <div class="create-post">
+      <a href="{{ url_for('create_post') }}">Добавить фильм</a>
+    </div>
+    
+
+
+    {% for el in data %}
+        <div class="posts">
+            {% if el.img_path %}
+                {% set relative_path = el.img_path.replace('\\', '/') %}
+                <div class="post-img-div">
+                  <img class="post_img" src="{{ url_for('media', filename=relative_path.split('/')[-1]) }}" alt="Изображение новости">
+                </div>
+            {% endif %}
+
+            <div class="post-user-div">
+              <h2>Чей фильм</h2>
+              <p>{{ el.user }}</p>
+            </div>
+
+            <div class="post-movie-div">
+              <h2>Название</h2>
+              <p>{{ el.movie }}</p>
+            </div>
+            
+            <div class="post-text-div">
+              <h2>Комментарии</h2>
+              <p>{{ el.text }}</p>
+            </div>
+            
+            <form action="{{ url_for('delete_post', post_id=el.id) }}" method="post" style="display:flex; align-items: center; justify-content: center;">
+                <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту новость?');" class="btn-delete">Удалить</button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let slideIndex = 0;
+      showSlides();
+  
+      function showSlides() {
+        let slides = document.getElementsByClassName("myslide");
+  
+        // Скрываем все слайды
+        for (let slide of slides) {
+          slide.style.display = "none";
+        }
+  
+        slideIndex++;
+        if (slideIndex > slides.length) {
+          slideIndex = 1;
+        }
+  
+        // Показываем текущий слайд с плавной анимацией
+        slides[slideIndex - 1].style.display = "flex";
+        slides[slideIndex - 1].style.opacity = "0";
+        setTimeout(() => {
+          slides[slideIndex - 1].style.opacity = "1";
+        }, 10);
+  
+        setTimeout(showSlides, 5000); // Меняем слайд каждые 5 секунд
+      }
+    });
+  </script>
+
+{% endblock %}
