@@ -1,10 +1,11 @@
 from kino import app, db, manager
-from flask import  render_template, request, flash, redirect, url_for, current_app, send_from_directory
+from flask import  render_template, request, flash, redirect, url_for, current_app, send_from_directory, session
 from flask_login import login_user, login_required
 from kino.models import Title, Admin
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
+from functools import wraps
 
 
 @login_required
@@ -17,13 +18,14 @@ def load_user(user_id):
 def register():
     login = request.form.get('login')
     password = request.form.get('password')
+    role = request.form.get('role')
     if request.method == 'POST':
         if not (login or password):
             flash(message='Ошибка, неправильные поля')
         else:
             try:
                 hash_pwd = generate_password_hash(password)
-                new_user = Admin(login= login, password= hash_pwd)
+                new_user = Admin(login= login, password= hash_pwd, role = role)
                 db.session.add(new_user)
                 db.session.commit()
             except Exception as e:
@@ -39,6 +41,30 @@ def register():
 def index():
     return redirect(url_for('authorization'))
 
+
+
+
+@app.route('/admin')
+
+def admin_panel():
+    # Отображение всех постов, которые может удалить админ
+    if session.get('role') != 'admin':  # или проверка через текущего пользователя
+        return redirect(url_for('main'))  # Или на другую страницу, если не админ
+    data = Title.query.all()
+    return render_template('admin.html', data = data)
+
+
+
+@app.route('/delete_post/<int:post_id>', methods=['POST'])
+
+def delete_post(post_id):
+    post = Title.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Пост успешно удалён.')
+    return redirect(url_for('admin_panel'))
+
+
 @app.route('/authorization', methods=['GET','POST'])
 def authorization():
     login = request.form.get('login')
@@ -51,6 +77,7 @@ def authorization():
         print(f"Пользователь найден: {user}")
         if user and check_password_hash(user.password, password):
             login_user(user)
+            session['role'] = user.role
             return redirect(url_for('main'))
         else:
             flash('Ошибка: логин или пароль неверны')
@@ -107,12 +134,3 @@ def media(filename):
     return send_from_directory(upload_folder, filename)
 
 
-@login_required
-@app.route('/delete_post/<int:post_id>', methods=['GET','POST'])
-def delete_post(post_id):
-    post = Title.query.get_or_404(post_id)
-
-    db.session.delete(post)
-    db.session.commit()
-
-    return redirect(url_for('main'))

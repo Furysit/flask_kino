@@ -1,108 +1,251 @@
-
-
-
 body {
-    background-image: url('/static/img/background.png');
-    text-align: center;
-    backdrop-filter: blur(1px);
-    height: 100%;
+  background-image: url('/static/img/background.png');
+  text-align: center;
+  backdrop-filter: blur(1px);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Exo 2", sans-serif;
 }
 
-h1{
-    font-size: 30px;
-    font-weight: 800;
+h1 {
+  font-size: 30px;
+  font-weight: 800;
 }
 
-.main_container{
-    max-width: 1200px;
-    max-height: 1200px;
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    border: solid, 2px;
-    background-color: rgba(233, 186, 33, 0.9);
-    overflow: hidden;
-    
+.main_container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(233, 186, 33, 0.9);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.create-post{
-  width: 100%;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.create-post {
+  margin: 0;
+}
+
+.view-toggle {
+  display: flex;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
-.create-post a{
+.view-button {
+  background-color: rgba(233, 186, 33, 0.9);
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.view-button.active {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.view-button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.add-movie-btn {
   text-decoration: none;
   font-family: "Exo 2", sans-serif;
   font-weight: 800;
-  font-size: 25px;
-  color: rgba(0, 0, 0, 0.767);
+  font-size: 20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.create-post a:hover{
-  color: rgba(255, 255, 255, 0.9);
-  transition: 0.5s ease-in;
+.add-movie-btn:hover {
+  background-color: rgba(233, 186, 33, 1);
 }
 
-.posts{
-  background-color: rgba(255, 255, 255, 0.6);
+.view-toggle {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin: auto;
-  margin-top: 20px;
-  max-width: 800px;
+  gap: 10px;
+}
+
+.view-button {
+  background-color: rgba(233, 186, 33, 0.9);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.view-button.active {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.view-button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Для сеточного отображения */
+/* Сеточное отображение: посты отображаются в виде карточек */
+body.grid-view .posts-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Сеточное отображение: картинки сохраняют пропорции и полностью видимы */
+body.grid-view .post-img-div {
+  width: 100%; /* Картинка заполняет ширину блока */
+  height: 200px; /* Фиксированная высота для блока */
+  display: flex; /* Центруем изображение */
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5; /* Задаем фоновый цвет для пустых областей (опционально) */
+  overflow: hidden;
+}
+
+body.grid-view .post-img {
+  max-width: 100%; /* Ограничиваем ширину изображения блоком */
+  max-height: 100%; /* Ограничиваем высоту изображения блоком */
+  object-fit: contain; /* Сохраняем пропорции изображения */
+}
+
+/* Для списка */
+/* Основной контейнер для списка */
+body.list-view .posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* В списочном отображении: картинка слева, контент справа */
+body.list-view .post {
+  display: flex;
+  flex-direction: row; /* Ставим элементы в строку */
+  align-items: center;
+  gap: 15px;
+  height: auto; /* Позволяем высоте подстраиваться под содержимое */
+  padding: 10px;
+}
+
+/* Картинка слева */
+body.list-view .post-img-div {
+  width: 150px; /* Фиксированная ширина картинки */
+  height: 150px; /* Фиксированная высота картинки */
+  flex-shrink: 0; /* Не позволяй картинке сжиматься */
+}
+
+/* Контент справа */
+body.list-view .post-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left; /* Выравниваем текст по левому краю */
+  flex-grow: 1; /* Контент растягивается на оставшееся пространство */
+}
+
+body.list-view .post-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto; /* Отправляем кнопку удаления вправо */
+}
+
+/* Дополнительные стили для изображений */
+.post-img {
   width: 100%;
-  height: 150px;
-  border: solid 1px;
+  height: 100%;
+  object-fit: cover; /* Чтобы изображение полностью заполняло контейнер */
+  border-radius: 5px; /* Картинка с легкими закруглениями */
 }
 
-.post-img-div{
-  width: 100px;
-  height: 100px;
-}
-
-.post-user-div, .post-movie-div, .post-text-div {
+.post {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   display: flex;
-  flex-direction: column; /* Расположение элементов сверху вниз */
-  justify-content: first baseline; /* Разделяем h2 и p */
-  align-items: center; /* Центруем элементы по горизонтали */
-  width: 100px; /* Общая ширина блока */
-  height: 150px; /* Общая высота блока */
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.post-user-div h2, .post-movie-div h2, .post-text-div h2 {
-  margin: 0; /* Убираем отступы сверху и снизу */
-  padding: 0; /* Убираем внутренние отступы */
+.post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.post-user-div p, .post-movie-div p, .post-text-div p {
-  font-family: "Exo 2", sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  margin-top: 40px;
-  padding: 0; /* Убираем внутренние отступы */
-  align-self: center; /* Центруем по горизонтали */
+.post-img-div {
+  width: 100%;
+  height: 200px; /* Устанавливаем фиксированную высоту для изображения */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.post-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Картинка адаптируется к блоку */
+}
+
+.post-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-content h3 {
+  font-size: 16px;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.post-content p {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.post-actions {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
 
 .btn-delete {
-  background-color: #ff4d4d;  /* Красный фон */
-  color: white;               /* Белый текст */
-  border: none;               /* Убираем границу */
-  font-size: 10px;            /* Размер шрифта */
-  border-radius: 2px;         /* Закругленные углы */
-  cursor: pointer;            /* Курсор "рука" при наведении */
-  transition: background-color 0.3s ease;  /* Плавное изменение фона */
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .btn-delete:hover {
-  background-color: #e60000;  /* Темнее при наведении */
+  background-color: rgba(255, 0, 0, 1);
 }
 
-.btn-delete:active {
-  background-color: #cc0000;  /* Ещё темнее при нажатии */
-  transform: scale(0.98);     /* Небольшое уменьшение */
-}
+
 
 .post_img{
   height: 150px;
