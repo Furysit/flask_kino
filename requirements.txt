@@ -1,4 +1,4 @@
-pymysql
+
 Flask
 Flask-Login
 Flask-Migrate
