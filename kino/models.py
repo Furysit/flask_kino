@@ -13,6 +13,8 @@ class Title(db.Model):
     movie = db.Column(db.String(50), nullable=False)
     text = db.Column(db.String(250), nullable=False)
     img_path = db.Column(db.String(250))
+    evan_rating = db.Column(db.Integer)
+    fury_rating = db.Column(db.Integer)
 
 class Admin(db.Model, UserMixin):
     __tablename__ = 'admin'

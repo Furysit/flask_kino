@@ -48,29 +48,45 @@
           <div class="post">
             {% if el.img_path %}
               {% set relative_path = el.img_path.replace('\\', '/') %}
-              <div class="post-img-div">
-                <img class="post-img" src="{{ url_for('media', filename=relative_path.split('/')[-1]) }}" alt="Изображение новости">
+              <div class="post-img-div" style="background-image: url('{{ url_for('media', filename=relative_path.split('/')[-1]) }}');">
+                <img class="post-img" src="{{ url_for('media', filename=relative_path.split('/')[-1]) }}" alt="Изображение">
               </div>
             {% endif %}
       
             <div class="post-content">
-              <div class="post-user-div">
-                <h3>Чей фильм</h3>
-                <p>{{ el.user }}</p>
-              </div>
-      
               <div class="post-movie-div">
-                <h3>Название</h3>
-                <p>{{ el.movie }}</p>
+                <h3 class="post-movie">{{ el.movie }}</h3>
               </div>
-      
+              <div class="post-user-div">
+                <h3> Чей фильм: {{ el.user }}</h3>
+              </div>
               <div class="post-text-div">
-                <h3>Комментарии</h3>
-                <p>{{ el.text }}</p>
+                <h3>Рейтинг от Эвана: <b>{{ el.evan_rating }} / 10 </b></h3>
               </div>
+              <div class="post-text-div">
+                <h3>Рейтинг от Фури: <b>{{ el.fury_rating }} / 10 </b></h3>
+              </div>
+              <div class="post-text-div">
+                <h3>Комментарии: {{ el.text }}</h3>
+              </div>
+            </div>
+            <div class="rating">
+              <h3>{{ (el.evan_rating + el.fury_rating) / 2 }} / 10</h3>
             </div>
           </div>
         {% endfor %}
+      </div>
+      
+      <div class="pagination">
+        {% if pagination.has_prev %}
+          <a href="{{ url_for('main', page=pagination.prev_num) }}">Предыдущая</a>
+        {% endif %}
+      
+        <span>Страница {{ pagination.page }} из {{ pagination.pages }}</span>
+      
+        {% if pagination.has_next %}
+          <a href="{{ url_for('main', page=pagination.next_num) }}">Следующая</a>
+        {% endif %}
       </div>
       
       
@@ -106,26 +122,32 @@
     });
   </script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-  const gridViewButton = document.getElementById("grid-view");
-  const listViewButton = document.getElementById("list-view");
-  const body = document.body;
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const gridViewButton = document.getElementById("grid-view");
+    const listViewButton = document.getElementById("list-view");
+    const body = document.body;
 
-  gridViewButton.addEventListener("click", () => {
-    body.classList.remove("list-view");
-    body.classList.add("grid-view");
-    gridViewButton.classList.add("active");
-    listViewButton.classList.remove("active");
-  });
-
-  listViewButton.addEventListener("click", () => {
-    body.classList.remove("grid-view");
+    // Устанавливаем вид по умолчанию — list view
     body.classList.add("list-view");
     listViewButton.classList.add("active");
-    gridViewButton.classList.remove("active");
+
+    // Обработчики для переключения вида
+    gridViewButton.addEventListener("click", () => {
+      body.classList.remove("list-view");
+      body.classList.add("grid-view");
+      gridViewButton.classList.add("active");
+      listViewButton.classList.remove("active");
+    });
+
+    listViewButton.addEventListener("click", () => {
+      body.classList.remove("grid-view");
+      body.classList.add("list-view");
+      listViewButton.classList.add("active");
+      gridViewButton.classList.remove("active");
+    });
   });
-});
-  </script>
+</script>
+
 
 {% endblock %}

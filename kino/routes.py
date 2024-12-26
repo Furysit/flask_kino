@@ -89,8 +89,10 @@ def authorization():
 @login_required
 @app.route('/main')
 def main():
-    data = Title.query.all()
-    return render_template('index.html', data=data)
+    page = request.args.get('page', 1, type=int)  # Текущая страница, по умолчанию 1
+    per_page = 10  # Количество элементов на странице
+    pagination = Title.query.paginate(page=page, per_page=per_page)  # Пагинация
+    return render_template('index.html', data=pagination.items, pagination=pagination)
 
 @login_required
 @app.route('/create_post', methods = ['GET', 'POST'])
@@ -99,6 +101,8 @@ def create_post():
     movie = request.form.get('movie')
     text = request.form.get('text')
     media_file = request.files.get('media')
+    evan_rating = int(request.form.get('evan_rating', 0))
+    fury_rating = int(request.form.get('fury_rating', 0))
 
     if request.method == 'POST':
         if user and movie and text:
@@ -114,7 +118,7 @@ def create_post():
                 # Сохраняем относительный путь без 'static/'
                 relative_file_path = os.path.join('saved_images', filename)
             try:
-                new_title = Title(user = user, movie = movie, text = text, img_path = relative_file_path )
+                new_title = Title(user = user, movie = movie, text = text, img_path = relative_file_path, evan_rating = evan_rating, fury_rating=fury_rating)
                 db.session.add(new_title)
                 db.session.commit()
             except Exception as e:
@@ -134,3 +138,10 @@ def media(filename):
     return send_from_directory(upload_folder, filename)
 
 
+@app.route('/movies', methods=['GET'])
+def movies():
+    page = request.args.get('page', 1, type=int)  # Получаем текущую страницу из запроса
+    per_page = 10  # Количество фильмов на страницу
+    pagination = Title.query.paginate(page=page, per_page=per_page)  # Пагинация
+    
+    return render_template('index.html', pagination=pagination)

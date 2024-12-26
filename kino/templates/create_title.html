@@ -8,27 +8,34 @@
 {% block body %}
 <div class="title_canvas">
     <div class="title_container">
-        <form class="title-form" method="post" action="{{ url_for('create_post')}}"  enctype="multipart/form-data">
+        <form class="title-form" method="post" action="{{ url_for('create_post')}}" enctype="multipart/form-data">
             <div class="input_box">
-                <input  name="user" placeholder="Чей фильм">
+                <input name="user" placeholder="Чей фильм">
             </div>
             <div class="input_box">
-                <input  name="movie" placeholder="Название">
+                <input name="movie" placeholder="Название">
             </div>
             <div class="input_box">
                 <textarea name="text" placeholder="Комментарии"></textarea>
             </div>
-            <div>
+            <div class="input_box">
+                <input type="number" name="evan_rating" placeholder="Рейтиг Эвана">
+            </div>
+            <div class="input_box">
+                <input type="number" name="fury_rating" placeholder="Рейтиг Фури">
+            </div>
+            <div class="input_box file-input">
                 <input type="file" name="media">
             </div>
-            <button type="submit">Создать</button>
+            <div class="button-container">
+                <button type="submit" class="submit-btn">Создать</button>
+                <a href="{{ url_for('main') }}" class="back-btn">Назад</a>
+                
+            </div>
         </form>
-        <form action="{{ url_for('main') }}">
-            <button>Назад</button>
-        </form>
-        
     </div>
 </div>
+
 
 
 {% endblock %}

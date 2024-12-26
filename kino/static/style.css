@@ -119,12 +119,17 @@ body.grid-view .post-img-div {
   align-items: center;
   background-color: #f5f5f5; /* Задаем фоновый цвет для пустых областей (опционально) */
   overflow: hidden;
+  background-size: cover; /* Растягиваем фон */
 }
 
 body.grid-view .post-img {
   max-width: 100%; /* Ограничиваем ширину изображения блоком */
   max-height: 100%; /* Ограничиваем высоту изображения блоком */
   object-fit: contain; /* Сохраняем пропорции изображения */
+}
+
+body.grid-view .post .rating{
+  margin-bottom: 5px;
 }
 
 /* Для списка */
@@ -154,8 +159,7 @@ body.list-view .post-img-div {
 
 /* Контент справа */
 body.list-view .post-content {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 10px;
   text-align: left; /* Выравниваем текст по левому краю */
   flex-grow: 1; /* Контент растягивается на оставшееся пространство */
@@ -167,7 +171,24 @@ body.list-view .post-actions {
   align-items: center;
   margin-left: auto; /* Отправляем кнопку удаления вправо */
 }
+/* Стиль для заголовка фильма */
+.post-movie-div {
+  text-align: center; /* Центрируем текст */
+  margin-bottom: 10px; /* Добавляем немного пространства снизу */
+}
 
+.post-movie {
+  font-weight: bold; /* Жирный шрифт */
+  font-size: 1.5em; /* Увеличиваем размер шрифта */
+  margin: 0; /* Убираем отступы вокруг заголовка */
+}
+
+.rating{
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  justify-content: center;
+}
 /* Дополнительные стили для изображений */
 .post-img {
   width: 100%;
@@ -218,11 +239,6 @@ body.list-view .post-actions {
   font-size: 16px;
   margin: 0;
   color: rgba(0, 0, 0, 0.8);
-}
-
-.post-content p {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
 }
 
 .post-actions {
@@ -343,4 +359,137 @@ body.list-view .post-actions {
   align-items: center;
   justify-content: space-between;
 
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination a {
+  padding: 5px 10px;
+  text-decoration: none;
+  color: white;
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
+.pagination a:hover {
+  background-color: #0056b3;
+}
+
+.pagination span {
+  font-weight: bold;
+}
+
+/* Общий стиль для всего контейнера */
+.title_canvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Высота окна */
+  background-color: rgba(233, 186, 33, 0.9);
+  padding: 20px;
+}
+
+/* Внешний контейнер формы */
+.title_container {
+  background-color: rgba(0, 0, 0, 0.247);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px 30px;
+  width: 100%;
+  height: 50%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+/* Стиль формы */
+.title-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Стиль для полей ввода */
+.input_box input,
+.input_box textarea {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input_box input:focus,
+.input_box textarea:focus {
+  border-color: #007bff; /* Цвет фокуса */
+}
+
+/* Стиль для текстовых областей */
+.input_box textarea {
+  height: 100px;
+  resize: none; /* Убираем возможность изменения размера */
+}
+
+/* Стиль для кнопок */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.submit-btn {
+  background-color: rgba(233, 186, 33, 0.9);
+  color: white;
+}
+
+.submit-btn:hover {
+  background-color: rgba(253, 218, 102, 0.9);
+}
+
+.back-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  background-color: #6c757d;
+  color: white;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Стиль для кнопки загрузки файла */
+.file-input input[type="file"] {
+  padding: 5px;
+  font-size: 14px;
+  border: none;
+  background: none;
+  outline: none;
 }
