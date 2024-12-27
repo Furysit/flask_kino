@@ -16,6 +16,8 @@ def load_user(user_id):
 @login_required
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
+    if session.get('role') != 'admin':  #  проверка через текущего пользователя
+        return redirect(url_for('main'))  #  на другую страницу, если не админ
     login = request.form.get('login')
     password = request.form.get('password')
     role = request.form.get('role')
@@ -43,20 +45,18 @@ def index():
 
 
 
-
+@login_required
 @app.route('/admin')
-
 def admin_panel():
     # Отображение всех постов, которые может удалить админ
-    if session.get('role') != 'admin':  # или проверка через текущего пользователя
-        return redirect(url_for('main'))  # Или на другую страницу, если не админ
+    if session.get('role') != 'admin':  #  проверка через текущего пользователя
+        return redirect(url_for('main'))  #  на другую страницу, если не админ
     data = Title.query.all()
     return render_template('admin.html', data = data)
 
 
-
+@login_required
 @app.route('/delete_post/<int:post_id>', methods=['POST'])
-
 def delete_post(post_id):
     post = Title.query.get_or_404(post_id)
     db.session.delete(post)
